@@ -13,6 +13,9 @@ LONG = 20000
 LONGEST = 30000
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(INPUT_WIRE, GPIO.IN)
+testbuf =''
+totalbuf = ''
+counter =0
 while True:
     value = 1
  # Loop until we read a 0
@@ -49,7 +52,7 @@ while True:
     print(command)
 #    for (val, pulse) in command:
 #        print(val, pulse)
-    testbuf =''
+    #testbuf =''
     for (i, val) in enumerate(command):
         # print(command)
         #print(i, '  ', val)
@@ -62,7 +65,7 @@ while True:
                 #print(0)
                 testbuf = testbuf+'0'
             elif (val[1] < SHORT and val_next[1] > SHORT and val_next[1] < MEDIUM):
-                #print(1)
+                #print(1)s
                 testbuf = testbuf+'1'
             elif (val[1] < SHORT and val_next[1] > LONG and val_next[1] < LONGEST):
                 print("A")
@@ -70,7 +73,17 @@ while True:
                 print("B")
             elif (val[1] > MEDIUM and val_next[1] > MEDIUM):
                 print("C")
-
+    print('counter' , counter)
+    if (counter < 5):
+        totalbuf = totalbuf+testbuf
+        counter +=1 
+    
+        if (counter == 4):
+            print('last buffer   ',testbuf)  
+            print('total ' ,totalbuf) 
+            totalbuf = ''
+            testbuf = ''
+            counter = 0 
     print(testbuf)
     print ("-----------End-----------\n")
     print ("Size of array is " + str(len(command)))
